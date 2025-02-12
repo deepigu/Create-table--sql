@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Create Table Statements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+        }
+        code {
+            font-family: "Courier New", monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>SQL Create Table Statements for Relational Schemas</h1>
+    
+    <h2>Instructor Table</h2>
+    <pre><code>
+CREATE TABLE instructor (
+    email VARCHAR(255) NOT NULL,
+    affiliation VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (email)
+);
+    </code></pre>
+
+    <h2>Course Table</h2>
+    <pre><code>
+CREATE TABLE course (
+    course_code VARCHAR(255) NOT NULL,
+    term VARCHAR(255) NOT NULL,
+    year VARCHAR(255) NOT NULL,
+    PRIMARY KEY (course_code)
+);
+    </code></pre>
+
+    <h2>Student Table</h2>
+    <pre><code>
+CREATE TABLE student (
+    student_id VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    PRIMARY KEY (student_id)
+);
+    </code></pre>
+
+    <h2>Student_Course Table</h2>
+    <pre><code>
+CREATE TABLE student_course (
+    student_id VARCHAR(255) NOT NULL,
+    course_code VARCHAR(255) NOT NULL,
+    PRIMARY KEY (student_id, course_code),
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    FOREIGN KEY (course_code) REFERENCES course(course_code)
+);
+    </code></pre>
+
+    <h2>Assignment Table</h2>
+    <pre><code>
+CREATE TABLE assignment (
+    course_code VARCHAR(255) NOT NULL,
+    assignment_id VARCHAR(255) NOT NULL,
+    PRIMARY KEY (course_code, assignment_id),
+    FOREIGN KEY (course_code) REFERENCES course(course_code)
+);
+    </code></pre>
+
+    <h2>Task Table</h2>
+    <pre><code>
+CREATE TABLE task (
+    task_id VARCHAR(255) NOT NULL,
+    assignment_id VARCHAR(255) NOT NULL,
+    grade INT NOT NULL,
+    PRIMARY KEY (task_id),
+    FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id)
+);
+    </code></pre>
+
+    <h2>Task_Set Table</h2>
+    <pre><code>
+CREATE TABLE task_set (
+    task_set_id VARCHAR(255) NOT NULL,
+    student_id VARCHAR(255) NOT NULL,
+    grade INT NOT NULL,
+    PRIMARY KEY (task_set_id),
+    FOREIGN KEY (student_id) REFERENCES student(student_id)
+);
+    </code></pre>
+
+    <h2>Task_Set_Task Table</h2>
+    <pre><code>
+CREATE TABLE task_set_task (
+    task_id VARCHAR(255) NOT NULL,
+    task_set_id VARCHAR(255) NOT NULL,
+    PRIMARY KEY (task_id, task_set_id),
+    FOREIGN KEY (task_id) REFERENCES task(task_id),
+    FOREIGN KEY (task_set_id) REFERENCES task_set(task_set_id)
+);
+    </code></pre>
+</body>
+</html>
